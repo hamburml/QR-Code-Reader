@@ -1,20 +1,4 @@
-﻿/*
-* Copyright 2012 ZXing.Net authors
-*
-* Licensed under the Apache License, Version 2.0 (the "License");
-* you may not use this file except in compliance with the License.
-* You may obtain a copy of the License at
-*
-*      http://www.apache.org/licenses/LICENSE-2.0
-*
-* Unless required by applicable law or agreed to in writing, software
-* distributed under the License is distributed on an "AS IS" BASIS,
-* WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
-* See the License for the specific language governing permissions and
-* limitations under the License.
-*/
-
-using System.Threading;
+﻿using System.Threading;
 
 using UnityEngine;
 
@@ -27,7 +11,7 @@ public class BarcodeCam : MonoBehaviour
     public Texture2D encoded;
 
     private WebCamTexture camTexture;
-    private Thread qrThread;
+    //private Thread qrThread;
 
     private Color32[] c;
     private int W, H;
@@ -39,9 +23,11 @@ public class BarcodeCam : MonoBehaviour
     public string LastResult;
     private bool shouldEncodeNow;
 
+    public UnityEngine.UI.RawImage image;
+
     void OnGUI()
     {
-        GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
+        //GUI.DrawTexture(screenRect, camTexture, ScaleMode.ScaleToFit);
     }
 
     void OnEnable()
@@ -64,7 +50,7 @@ public class BarcodeCam : MonoBehaviour
 
     void OnDestroy()
     {
-        qrThread.Abort();
+        //qrThread.Abort();
         camTexture.Stop();
     }
 
@@ -83,12 +69,13 @@ public class BarcodeCam : MonoBehaviour
         screenRect = new Rect(0, 0, Screen.width, Screen.height);
 
         camTexture = new WebCamTexture();
+        //WebCamTexture.devices[0].availableResolutions;
         camTexture.requestedHeight = Screen.height; // 480;
         camTexture.requestedWidth = Screen.width; //640;
         OnEnable();
 
-        qrThread = new Thread(DecodeQR);
-        qrThread.Start();
+        //qrThread = new Thread(DecodeQR);
+        //qrThread.Start();
     }
 
     void Update()
@@ -96,6 +83,10 @@ public class BarcodeCam : MonoBehaviour
         if (c == null)
         {
             c = camTexture.GetPixels32();
+
+            image.texture = camTexture;
+            image.material.mainTexture = camTexture;
+            print(camTexture.videoRotationAngle);
         }
 
         // encode the last found
