@@ -1,6 +1,7 @@
 ﻿using System.Threading;
 
 using UnityEngine;
+using UnityEngine.UI;
 
 using ZXing;
 using ZXing.QrCode;
@@ -8,7 +9,7 @@ using ZXing.QrCode;
 public class BarcodeCam : MonoBehaviour
 {
     // Texture for encoding test
-    public Texture2D encoded;
+    //public Texture2D encoded;
 
     private WebCamTexture camTexture;
     //private Thread qrThread;
@@ -23,7 +24,7 @@ public class BarcodeCam : MonoBehaviour
     public string LastResult;
     private bool shouldEncodeNow;
 
-    public UnityEngine.UI.RawImage image;
+    public RawImage image;
 
     void OnGUI()
     {
@@ -62,7 +63,7 @@ public class BarcodeCam : MonoBehaviour
 
     void Start()
     {
-        encoded = new Texture2D(256, 256);
+        //encoded = new Texture2D(256, 256);
         LastResult = "http://www.google.com";
         shouldEncodeNow = true;
 
@@ -90,7 +91,8 @@ public class BarcodeCam : MonoBehaviour
         }
 
         // encode the last found
-        var textForEncoding = LastResult;
+        /*
+         * var textForEncoding = LastResult;
         if (shouldEncodeNow &&
             textForEncoding != null)
         {
@@ -99,6 +101,7 @@ public class BarcodeCam : MonoBehaviour
             encoded.Apply();
             shouldEncodeNow = false;
         }
+        */
     }
 
     void DecodeQR()
